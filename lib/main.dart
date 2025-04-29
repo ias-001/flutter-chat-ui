@@ -221,86 +221,79 @@ class ChatBubble extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Row(
-          mainAxisAlignment:
-              isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Flexible(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                decoration: BoxDecoration(
-                  color: isMe ? const Color(0xFFFFC84A) : Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: isMe ? const Radius.circular(90) : const Radius.circular(16),
-                    topRight: isMe ? const Radius.circular(16) : const Radius.circular(90),
-                    bottomLeft: isMe ? const Radius.circular(90) : const Radius.circular(16),
-                    bottomRight: isMe ? const Radius.circular(16) : const Radius.circular(90),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (!isMe)
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: const Color(0xFF2A9D8F), width: 1),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const CircleAvatar(
-                              radius: 10,
-                              backgroundImage: AssetImage('assets/images.jpeg'),
-                              backgroundColor: Colors.transparent,
-                            ),
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            sender,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ],
-                      ),
-                    if (!isMe) const SizedBox(height: 6),
-                    Padding(
-                      padding: isMe ? const EdgeInsets.only(top: 10) : EdgeInsets.zero, 
-                      child: Text(
-                        text,
-                        style: const TextStyle(fontSize: 14),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Padding(
-                        padding: isMe
-                            ? const EdgeInsets.only(left: 0, right: 0) 
-                            : const EdgeInsets.only(left: 0, right: 10), 
-                        child: Text(
-                          time,
-                          style: const TextStyle(fontSize: 10, color: Colors.black45),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+Widget build(BuildContext context) {
+  return Align(
+    alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * 0.8, // Limit width to 80%
+        ),
+        child: IntrinsicWidth(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            decoration: BoxDecoration(
+              color: isMe ? const Color(0xFFFFC84A) : Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: isMe ? const Radius.circular(90) : const Radius.circular(16),
+                topRight: isMe ? const Radius.circular(16) : const Radius.circular(90),
+                bottomLeft: isMe ? const Radius.circular(90) : const Radius.circular(16),
+                bottomRight: isMe ? const Radius.circular(16) : const Radius.circular(90),
               ),
             ),
-          ],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (!isMe)
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(0),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: const Color(0xFF2A9D8F), width: 1),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const CircleAvatar(
+                          radius: 10,
+                          backgroundImage: AssetImage('assets/images.jpeg'),
+                          backgroundColor: Colors.transparent,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        sender,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ],
+                  ),
+                if (!isMe) const SizedBox(height: 6),
+                Text(
+                  text,
+                  softWrap: true,
+                  style: const TextStyle(fontSize: 14),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    time,
+                    style: const TextStyle(fontSize: 10, color: Colors.black45),
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
+
 }
 
 class ChatInputBox extends StatelessWidget {
